@@ -13,8 +13,8 @@ CONTRACT OWNER:
                     User's State,
                     User's Zip,
                     User's Date of Birth (can be in any format ex: mm-dd-yyyy or mm/dd/yyyy or March 16, 1978),
-                    User's Driver License or State ID number,
-                    User's License Expiration Date
+                    User's Driver License or ID number,
+                    User's License or ID State of Issuance
 
 3. Run the kycMapping() function to confirm that the user has been added to the smart contract
 
