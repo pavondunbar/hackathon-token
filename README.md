@@ -5,16 +5,16 @@ CONTRACT OWNER:
 1. Deploy this contract to the blockchain of your choice.
 
 2. Call the addKYC() function in the contract to input the user's information to approve the user to get HACK Tokens. Pass as parameters:
-                    a. User's wallet address
-                    b. An ID number to identify the user
-                    c. User's Full name
-                    d. User's Residential Address
-                    e. User's City
-                    f. User's State
-                    g. User's Zip
-                    h. User's Date of Birth (can be in any format ex: mm-dd-yyyy or mm/dd/yyyy or March 16, 1978)
-                    i. User's Driver License or State ID number
-                    j. User's License Expiration Date
+                    User's wallet address,
+                    An ID number to identify the user,
+                    User's Full name,
+                    User's Residential Address,
+                    User's City,
+                    User's State,
+                    User's Zip,
+                    User's Date of Birth (can be in any format ex: mm-dd-yyyy or mm/dd/yyyy or March 16, 1978),
+                    User's Driver License or State ID number,
+                    User's License Expiration Date
 
 3. Run the kycMapping() function to confirm that the user has been added to the smart contract
 
