@@ -21,7 +21,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/draft-ERC20Permit.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
-contract HackathonToken is ERC20, Ownable, ReentrancyGuard, ERC20Permit, ERC20Votes {
+contract Artemis is ERC20, Ownable, ReentrancyGuard, ERC20Permit, ERC20Votes {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
     // IERC20(usdctoken).safeTransferFrom(_msgSender(), address(this), _amount);
@@ -38,8 +38,8 @@ contract HackathonToken is ERC20, Ownable, ReentrancyGuard, ERC20Permit, ERC20Vo
     IERC20 public LINK;
     // uint public ad1 = 0;
 
-    constructor(address _link, address _treasuryAddress) public ERC20("Hackathon Token", "HACK") ERC20Permit("Hackathon Token") Ownable() ReentrancyGuard() {
-        LINK = IERC20(_link);
+    constructor(address _usdc, address _treasuryAddress) public ERC20("Artemis", "ART") ERC20Permit("Artemis") Ownable() ReentrancyGuard() {
+        USDC = IERC20(_usdc);
         treasuryAddress = _treasuryAddress;
     }
         function _afterTokenTransfer(address from, address to, uint256 amount) internal override(ERC20, ERC20Votes) {
@@ -108,10 +108,10 @@ contract HackathonToken is ERC20, Ownable, ReentrancyGuard, ERC20Permit, ERC20Vo
     
 
     // If this stablecoin is being backed by an existing crypto, specify the decimal places as the crypto backing the stablecoin.
-    // This stablecoin is backed by LINK and LINK has 18 decimal places, so I am specifying 18 here for decimals.
+    // This stablecoin is backed by USDC and USDC has 6 decimal places, so I am specifying 6 here for decimals.
     
     function decimals() public view virtual override returns (uint8){
-        return 18;
+        return 6;
     }
 
 
@@ -140,26 +140,26 @@ contract HackathonToken is ERC20, Ownable, ReentrancyGuard, ERC20Permit, ERC20Vo
         uint poolRec = diffPrice.mul(poolPercent).div(denominator);
         if(_referer != address(0)) {
             uint refererAmt = treasuryRec.mul(referralPercent).div(denominator);
-            // LINK.transferFrom(msg.sender, address(this), accPrice );
-            IERC20(address(LINK)).safeTransferFrom(msg.sender, address(this), accPrice);
-            // LINK.transferFrom(msg.sender, address(this), poolRec );
-            IERC20(address(LINK)).safeTransferFrom(msg.sender, address(this), poolRec);
+            // USDC.transferFrom(msg.sender, address(this), accPrice );
+            IERC20(address(USDC)).safeTransferFrom(msg.sender, address(this), accPrice);
+            // USDC.transferFrom(msg.sender, address(this), poolRec );
+            IERC20(address(USDC)).safeTransferFrom(msg.sender, address(this), poolRec);
             Tf = poolRec;
             Earning = Earning.add(poolRec);
-            // LINK.transferFrom(msg.sender, _referer, refererAmt );
-            IERC20(address(LINK)).safeTransferFrom(msg.sender, _referer, refererAmt);
-            // LINK.transferFrom(msg.sender, treasuryAddress, treasuryRec.sub(refererAmt));
-            IERC20(address(LINK)).safeTransferFrom(msg.sender, treasuryAddress, treasuryRec.sub(refererAmt));
+            // USDC.transferFrom(msg.sender, _referer, refererAmt );
+            IERC20(address(USDC)).safeTransferFrom(msg.sender, _referer, refererAmt);
+            // USDC.transferFrom(msg.sender, treasuryAddress, treasuryRec.sub(refererAmt));
+            IERC20(address(USDC)).safeTransferFrom(msg.sender, treasuryAddress, treasuryRec.sub(refererAmt));
             Tref = treasuryRec.sub(refererAmt) ;
         } else {
-           // LINK.transferFrom(msg.sender, address(this), accPrice );
-           IERC20(address(LINK)).safeTransferFrom(msg.sender, address(this), accPrice);
-           // LINK.transferFrom(msg.sender, address(this), poolRec );
-           IERC20(address(LINK)).safeTransferFrom(msg.sender, address(this), poolRec);
+           // USDC.transferFrom(msg.sender, address(this), accPrice );
+           IERC20(address(USDC)).safeTransferFrom(msg.sender, address(this), accPrice);
+           // USDC.transferFrom(msg.sender, address(this), poolRec );
+           IERC20(address(USDC)).safeTransferFrom(msg.sender, address(this), poolRec);
            Tf = poolRec;
            Earning = Earning.add(poolRec);
-           // LINK.transferFrom(msg.sender, treasuryAddress, treasuryRec);
-           IERC20(address(LINK)).safeTransferFrom(msg.sender, treasuryAddress, treasuryRec);
+           // USDC.transferFrom(msg.sender, treasuryAddress, treasuryRec);
+           IERC20(address(USDC)).safeTransferFrom(msg.sender, treasuryAddress, treasuryRec);
            Tref = treasuryRec ;        
         }
         // updateBuyPrice(Tf,incPrice,Tref);
@@ -187,21 +187,21 @@ contract HackathonToken is ERC20, Ownable, ReentrancyGuard, ERC20Permit, ERC20Vo
         uint treasuryRec = tax.mul(treasuryPercent).div(denominator);
         uint poolRec = tax.mul(poolPercent).div(denominator);
         // this.transferFrom(msg.sender, treasuryAddress, treasuryRec);
-        // LINK.transfer(treasuryAddress, treasuryRec.mul(price).div(10**stableDec));
-        IERC20(address(LINK)).safeTransfer(treasuryAddress, treasuryRec.mul(price).div(10**stableDec));
+        // USDC.transfer(treasuryAddress, treasuryRec.mul(price).div(10**stableDec));
+        IERC20(address(USDC)).safeTransfer(treasuryAddress, treasuryRec.mul(price).div(10**stableDec));
         // this.transferFrom(msg.sender, address(this), poolRec);
         // this.transfer(treasuryAddress, treasuryRec.mul(price).div(10**stableDec));        
         uint sendAmt = price.mul(_amount.sub(tax)).div(10 ** stableDec);
         Earning = Earning.add(poolRec.mul(price).div(10**stableDec));
         // updateSellPrice(poolRec.mul(price).div(10**stableDec),_amount,poolRec);
         burn(msg.sender, _amount);
-        // LINK.transfer(msg.sender, sendAmt);
-        IERC20(address(LINK)).safeTransfer(msg.sender, sendAmt);      
+        // USDC.transfer(msg.sender, sendAmt);
+        IERC20(address(USDC)).safeTransfer(msg.sender, sendAmt);      
     } 
 
     
-    function LINKPoolBalance() view external returns(uint) {
-        return LINK.balanceOf(address(this));
+    function USDCPoolBalance() view external returns(uint) {
+        return USDC.balanceOf(address(this));
     }
 
     
@@ -213,7 +213,7 @@ contract HackathonToken is ERC20, Ownable, ReentrancyGuard, ERC20Permit, ERC20Vo
 
 
     // function transferERC20(IERC20 token, address to, uint256 amount) payable public {
-    // 	require(msg.sender == owner(), "You are not authorized to withdraw LINK from this contract.");
+    // 	require(msg.sender == owner(), "You are not authorized to withdraw USDC from this contract.");
     //	uint256 erc20balance = token.balanceOf(address(this));
     //	require(amount <= erc20balance, "Insufficient Funds.");
     //    token.transfer(to, amount);
