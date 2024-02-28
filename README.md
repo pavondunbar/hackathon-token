@@ -1,6 +1,6 @@
 How to Use This Contract
 
-NOTE: This is a crypto-backed stablecoin that has a built in KYC mechanism. This wa submitted to Chainlink's Hackathon back in 2023.
+NOTE: This is a crypto-backed stablecoin that has a built in KYC mechanism. This was submitted to Chainlink's Hackathon back in 2023.
 
 CONTRACT OWNER:
 
