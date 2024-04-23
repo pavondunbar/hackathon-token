@@ -35,7 +35,7 @@ contract Artemis is ERC20, Ownable, ReentrancyGuard, ERC20Permit, ERC20Votes {
     uint public incPercent = 103; //set this back to 110 if value fails
     uint denominator = 100;
     uint public stableDec = 6;
-    IERC20 public LINK;
+    IERC20 public USDC;
     // uint public ad1 = 0;
 
     constructor(address _usdc, address _treasuryAddress) public ERC20("Artemis", "ART") ERC20Permit("Artemis") Ownable() ReentrancyGuard() {
@@ -130,8 +130,8 @@ contract Artemis is ERC20, Ownable, ReentrancyGuard, ERC20Permit, ERC20Votes {
         uint Tf = 0;
         uint Tref = 0 ;      
         // The line of code below is the fee charged to the buyer on the buy. Look at the state variables incPercent and denominator
-	// For example, if a buyer pays 1000 LINK and the incPercent = 101, and denominator = 100, then 101/100 = 1.01.
-        // 1000 * 1.01 = 1010. 1010 - 1000 = 10. The buyer would pay 10 as a fee to buy 1000 Diamonds with 1000 LINK
+	// For example, if a buyer pays 1000 USDC and the incPercent = 101, and denominator = 100, then 101/100 = 1.01.
+        // 1000 * 1.01 = 1010. 1010 - 1000 = 10. The buyer would pay 10 as a fee to buy 1000 Diamonds with 1000 USDC
         uint incAmount =  _amount.mul(incPercent).div(denominator);
         uint incPrice = incAmount.mul(price).div(10**stableDec);
         uint accPrice = _amount.mul(price).div(10**stableDec);
